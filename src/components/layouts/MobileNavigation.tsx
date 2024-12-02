@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/sheet";
 import { siteConfig } from "@/config/site";
 import { MainNavItem } from "@/types";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Icons } from "../icons";
 import {
@@ -22,6 +23,21 @@ interface MobileNavigationProps {
 }
 
 const MobileNavigation = ({ items }: MobileNavigationProps) => {
+  const [isDesktop, setIsDesktop] = useState(false);
+  const query = "(min-width: 1024px)";
+
+  useEffect(() => {
+    const onChange = (event: MediaQueryListEvent) => {
+      setIsDesktop(event.matches);
+    };
+    const result = matchMedia(query);
+    result.addEventListener("change", onChange);
+
+    return () => result.removeEventListener("change", onChange);
+  }, [query]);
+
+  if (isDesktop) return null;
+
   return (
     <div className="lg:hidden">
       <Sheet>
@@ -65,12 +81,6 @@ const MobileNavigation = ({ items }: MobileNavigationProps) => {
               ))}
             </div>
           </ScrollArea>
-          {/* 
-          <SheetFooter>
-            <SheetClose asChild>
-              <Button type="submit">Save changes</Button>
-            </SheetClose>
-          </SheetFooter> */}
         </SheetContent>
       </Sheet>
     </div>
