@@ -21,7 +21,7 @@ interface MainNavigationProps {
 const MainNavigation = ({ items }: MainNavigationProps) => {
   return (
     <div className="hidden gap-6 lg:flex">
-      <Link to={"/"} className="flex items-center space-x-2">
+      <Link to={"/"} className="flex items-center space-x-2 2xl:text-lg">
         <Icons.logo className="size-7" aria-hidden="true" />
         <span className="font-bold">{siteConfig.name}</span>
         <span className="sr-only">Home</span>
@@ -95,7 +95,7 @@ const ListItem = React.forwardRef<
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none">{title}</div>
+          <div className="font-medium leading-none">{title}</div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>

@@ -48,7 +48,7 @@ export function NewsLetterForm() {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem className="relative space-y-0">
+            <FormItem className="relative space-y-2">
               <FormLabel className="sr-only">Email</FormLabel>
               <FormControl>
                 <Input
@@ -60,7 +60,7 @@ export function NewsLetterForm() {
               <FormMessage />
               <Button
                 size={"icon"}
-                className="absolute right-[3.5px] top-[4px] z-20 size-7"
+                className="absolute -top-[4px] right-[3.5px] z-20 size-7"
                 type="submit"
               >
                 {loading ? (
