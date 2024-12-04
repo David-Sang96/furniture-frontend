@@ -16,7 +16,7 @@ const HomePage = () => {
     href: string;
     sideText: string;
   }) => (
-    <div className="mb-10 mt-28 flex flex-col max-md:px-4 md:flex-row md:items-center md:justify-between">
+    <div className="mb-10 mt-28 flex flex-col md:flex-row md:items-center md:justify-between">
       <h2 className="mb-4 text-2xl font-semibold md:mb-0">{title}</h2>
       <Link to={href} className="font-semibold text-muted-foreground underline">
         {sideText}
@@ -26,13 +26,13 @@ const HomePage = () => {
 
   return (
     <section>
-      <div className="flex flex-col max-sm:text-center lg:flex-row lg:justify-between">
+      <div className="flex flex-col max-md:text-center lg:flex-row lg:justify-between">
         {/* Text Section */}
         <div className="my-8 lg:my-0 lg:mt-16 lg:w-2/5 2xl:mt-24">
           <h1 className="mb-4 text-4xl font-bold text-own lg:mb-8 lg:text-6xl 2xl:text-7xl">
             Modern Interior Design Studio
           </h1>
-          <p className="mb-6 text-own max-sm:px-4 lg:mb-8 2xl:text-lg">
+          <p className="mb-6 text-own lg:mb-8 2xl:text-lg">
             Furniture is an essential component of any living space, providing
             functionality comfort, and aesthetic appeal.
           </p>
@@ -56,7 +56,9 @@ const HomePage = () => {
         {/* Image Section */}
         <img src={CouchImg} alt="Couch" className="w-full lg:w-3/5" />
       </div>
-      <CarouselCard products={products} />
+      <div className="overflow-hidden lg:px-10">
+        <CarouselCard products={products} />
+      </div>
       <Title title="Recent Blog" href="/blogs" sideText="View All Posts" />
       <BlogCard posts={posts} />
     </section>

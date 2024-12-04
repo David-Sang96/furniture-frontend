@@ -6,7 +6,7 @@ import MobileNavigation from "./MobileNavigation";
 const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
-      <nav className="container mx-auto flex h-16 items-center justify-between">
+      <nav className="container flex h-16 items-center justify-between">
         <MainNavigation items={siteConfig.mainNav} />
         <MobileNavigation items={siteConfig.mainNav} />
 

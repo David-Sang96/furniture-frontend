@@ -7,7 +7,7 @@ interface BlogCardProps {
 
 const BlogCard = ({ posts }: BlogCardProps) => {
   return (
-    <div className="my-8 grid gap-8 max-sm:px-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="my-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {posts.slice(0, 3).map((post) => (
         <Link to={`/blogs/${post.id}`} className="" key={post.id}>
           <img
