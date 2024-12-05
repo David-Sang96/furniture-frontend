@@ -41,7 +41,7 @@ export function NewsLetterForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="max-lg:pr-8"
+        className="max-lg:pr-6"
         autoComplete="off"
       >
         <FormField

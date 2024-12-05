@@ -1,10 +1,13 @@
 import BlogCard from "@/components/blogs/BlogCard";
 import CarouselCard from "@/components/products/CarouselCard";
+import ProductCard from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
 import CouchImg from "@/data/images/couch.png";
 import { posts } from "@/data/posts";
 import { products } from "@/data/products";
 import { Link } from "react-router-dom";
+
+const sampleProducts = products.slice(0, 4);
 
 const HomePage = () => {
   const Title = ({
@@ -59,6 +62,17 @@ const HomePage = () => {
       <div className="overflow-hidden lg:px-10">
         <CarouselCard products={products} />
       </div>
+      <Title
+        title="Featured Products"
+        href="/products"
+        sideText="View All Products"
+      />
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {sampleProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+
       <Title title="Recent Blog" href="/blogs" sideText="View All Posts" />
       <BlogCard posts={posts} />
     </section>

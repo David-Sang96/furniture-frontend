@@ -9,8 +9,9 @@ const BlogDetailPage = () => {
   const post = posts.find((post) => post.id === postId);
 
   return (
-    <div className="container">
+    <div className="container max-md:px-0">
       <section className="flex flex-col lg:flex-row">
+        {/* Left Section */}
         <section className="w-full lg:w-3/4 lg:pr-16">
           <Button variant={"outline"} asChild className="mb-6 mt-8">
             <Link to={"/blogs"}>
@@ -46,6 +47,8 @@ const BlogDetailPage = () => {
             </p>
           )}
         </section>
+
+        {/* Right Section */}
         <section className="w-full pt-12 lg:mt-14 lg:flex-1">
           <div className="mb-8 flex items-center gap-2 font-semibold">
             <Icons.layers />
