@@ -1,3 +1,4 @@
+import BackButton from "@/components/BackButton";
 import RichTextRenderer from "@/components/blogs/RichTextRenderer";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -13,12 +14,12 @@ const BlogDetailPage = () => {
       <section className="flex flex-col lg:flex-row">
         {/* Left Section */}
         <section className="w-full lg:w-3/4 lg:pr-16">
-          <Button variant={"outline"} asChild className="mb-6 mt-8">
+          <BackButton>
             <Link to={"/blogs"}>
               <Icons.arrowLeft />
               All Posts
             </Link>
-          </Button>
+          </BackButton>
           {post ? (
             <>
               <h2 className="mb-3 text-3xl font-bold">{post.title}</h2>

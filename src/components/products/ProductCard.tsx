@@ -7,23 +7,23 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatPrice } from "@/lib/utils";
+import { cn, formatPrice } from "@/lib/utils";
 import { Product } from "@/types";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 import { Icons } from "../icons";
 import { AspectRatio } from "../ui/aspect-ratio";
 
-interface ProductCardProps {
+interface ProductCardProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
   product: Product;
 }
 
-function ProductCard({ product }: ProductCardProps) {
+function ProductCard({ product, className }: ProductCardProps) {
   const isDesktop = useMediaQuery({ minWidth: 1530 });
 
   return (
-    <Card className="size-full overflow-hidden rounded-lg">
-      <Link to={`/product/${product.id}`} aria-label={product.name}>
+    <Card className={cn("size-full overflow-hidden rounded-lg", className)}>
+      <Link to={`/products/${product.id}`} aria-label={product.name}>
         <CardHeader className="border-b p-0">
           <AspectRatio ratio={1 / 1} className="bg-muted">
             <img

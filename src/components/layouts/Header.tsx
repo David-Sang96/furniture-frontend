@@ -1,5 +1,7 @@
 import { siteConfig } from "@/config/site";
+import { User } from "@/data/user";
 import { ModeToggle } from "../mode-toggle";
+import AuthDropDown from "./AuthDropDown";
 import MainNavigation from "./MainNavigation";
 import MobileNavigation from "./MobileNavigation";
 
@@ -12,6 +14,7 @@ const Header = () => {
 
         <div className="flex items-center space-x-4 max-lg:mr-8">
           <ModeToggle />
+          <AuthDropDown user={User} />
         </div>
       </nav>
     </header>
