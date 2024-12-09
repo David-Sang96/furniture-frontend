@@ -67,7 +67,7 @@ export type Cart = {
   inventory: number;
   quantity: number;
   storeId: string;
-  images: Image[];
+  image: Image;
   category: string;
   subcategory: string;
   storeName: string;

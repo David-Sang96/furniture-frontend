@@ -12,6 +12,10 @@ import {
 import { cartItems } from "@/data/carts";
 import { Icons } from "../icons";
 import { Separator } from "../ui/separator";
+import { Link } from "react-router-dom";
+import { ScrollArea } from "../ui/scroll-area";
+import CartItem from "../carts/CartItem";
+import { formatPrice } from "@/lib/utils";
 
 export default function CartSheet() {
   const itemCount = 4;
@@ -36,12 +40,44 @@ export default function CartSheet() {
         </Button>
       </SheetTrigger>
       <SheetContent className="w-full md:max-w-lg">
-        <SheetHeader className="mb-2">
+        <SheetHeader>
           <SheetTitle>Cart - {itemCount}</SheetTitle>
         </SheetHeader>
-        <Separator />
+        <Separator className="my-2" />
         {cartItems.length > 0 ? (
-          <div className=""></div>
+          <>
+            <ScrollArea className="my-4 h-[68vh] pb-8">
+              {cartItems.map((cartItem) => (
+                <CartItem key={cartItem.id} cart={cartItem} />
+              ))}
+            </ScrollArea>
+            <div className="space-y-4">
+              <Separator />
+              <div className="space-y-1.5 text-sm">
+                <div className="flex justify-between">
+                  <span>Shipping</span>
+                  <span>Free</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Taxes</span>
+                  <span>Calculate</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Total</span>
+                  <span>{formatPrice(totalAmount.toFixed(2))}</span>
+                </div>
+              </div>
+              <SheetFooter>
+                <SheetClose asChild>
+                  <Button type="submit" asChild className="w-full">
+                    <Link to={"/checkout"} aria-label="check out">
+                      Continue to checkout
+                    </Link>
+                  </Button>
+                </SheetClose>
+              </SheetFooter>
+            </div>
+          </>
         ) : (
           <div className="flex min-h-screen flex-col items-center justify-center">
             <Icons.cart className="mb-4 size-16 text-muted-foreground" />
@@ -50,11 +86,6 @@ export default function CartSheet() {
             </div>
           </div>
         )}
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
-          </SheetClose>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   );
