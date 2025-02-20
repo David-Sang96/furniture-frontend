@@ -1,6 +1,6 @@
 import Footer from "@/components/layouts/Footer";
 import Header from "@/components/layouts/Header";
-import { Outlet, ScrollRestoration } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router";
 
 const RootLayout = () => {
   return (

@@ -1,5 +1,5 @@
 import { siteConfig } from "@/config/site";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Icons } from "../icons";
 import { NewsLetterForm } from "../news-letter";
 
@@ -19,7 +19,7 @@ const Footer = () => {
             {siteConfig.footerNav.map((footerItem) => (
               <div className="space-y-3" key={footerItem.title}>
                 <h4 className="font-medium 2xl:text-lg">{footerItem.title}</h4>
-                <ul className="space-y-3 text-sm text-muted-foreground 2xl:text-base">
+                <ul className="text-muted-foreground space-y-3 text-sm 2xl:text-base">
                   {footerItem.items.map((item) => (
                     <li key={item.title}>
                       <Link

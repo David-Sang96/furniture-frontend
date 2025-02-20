@@ -10,12 +10,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cartItems } from "@/data/carts";
-import { Icons } from "../icons";
-import { Separator } from "../ui/separator";
-import { Link } from "react-router-dom";
-import { ScrollArea } from "../ui/scroll-area";
-import CartItem from "../carts/CartItem";
 import { formatPrice } from "@/lib/utils";
+import { Link } from "react-router";
+import CartItem from "../carts/CartItem";
+import { Icons } from "../icons";
+import { ScrollArea } from "../ui/scroll-area";
+import { Separator } from "../ui/separator";
 
 export default function CartSheet() {
   const itemCount = 4;
@@ -80,8 +80,8 @@ export default function CartSheet() {
           </>
         ) : (
           <div className="flex min-h-screen flex-col items-center justify-center">
-            <Icons.cart className="mb-4 size-16 text-muted-foreground" />
-            <div className="text-xl font-medium text-muted-foreground">
+            <Icons.cart className="text-muted-foreground mb-4 size-16" />
+            <div className="text-muted-foreground text-xl font-medium">
               Your cart is empty
             </div>
           </div>

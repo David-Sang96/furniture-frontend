@@ -10,7 +10,7 @@ import {
 import { cn, formatPrice } from "@/lib/utils";
 import { Product } from "@/types";
 import { useMediaQuery } from "react-responsive";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Icons } from "../icons";
 import { AspectRatio } from "../ui/aspect-ratio";
 
@@ -50,7 +50,7 @@ function ProductCard({ product, className }: ProductCardProps) {
         {product.status === "active" ? (
           <Button
             size={isDesktop ? "lg" : "sm"}
-            className="w-full rounded-sm bg-own font-bold text-white"
+            className="bg-own w-full rounded-sm font-bold text-white"
             aria-label="Active"
           >
             <Icons.plus />

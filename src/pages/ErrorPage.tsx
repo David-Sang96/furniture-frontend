@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const Error = () => {
   return (
@@ -19,9 +19,9 @@ const Error = () => {
       <main className="my-32 flex grow items-center justify-center">
         <Card className="w-[350px] md:w-[500px]">
           <CardHeader className="flex place-items-center gap-2">
-            <div className="mb-4 mt-2 grid size-24 place-items-center rounded-full border border-dashed border-muted-foreground/70">
+            <div className="border-muted-foreground/70 mb-4 mt-2 grid size-24 place-items-center rounded-full border border-dashed">
               <Icons.exclamation
-                className="size-10 text-muted-foreground/70"
+                className="text-muted-foreground/70 size-10"
                 aria-hidden="true"
               />
             </div>

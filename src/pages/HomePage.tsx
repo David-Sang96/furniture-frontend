@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import CouchImg from "@/data/images/couch.png";
 import { posts } from "@/data/posts";
 import { products } from "@/data/products";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const sampleProducts = products.slice(0, 4);
 
@@ -21,7 +21,7 @@ const HomePage = () => {
   }) => (
     <div className="mb-10 mt-28 flex flex-col md:flex-row md:items-center md:justify-between">
       <h2 className="mb-4 text-2xl font-semibold md:mb-0">{title}</h2>
-      <Link to={href} className="font-semibold text-muted-foreground underline">
+      <Link to={href} className="text-muted-foreground font-semibold underline">
         {sideText}
       </Link>
     </div>
@@ -32,10 +32,10 @@ const HomePage = () => {
       <div className="flex flex-col max-md:text-center lg:flex-row lg:justify-between">
         {/* Text Section */}
         <div className="my-8 lg:my-0 lg:mt-16 lg:w-2/5 2xl:mt-24">
-          <h1 className="mb-4 text-4xl font-bold text-own lg:mb-8 lg:text-6xl 2xl:text-7xl">
+          <h1 className="text-own mb-4 text-4xl font-bold lg:mb-8 lg:text-6xl 2xl:text-7xl">
             Modern Interior Design Studio
           </h1>
-          <p className="mb-6 text-own lg:mb-8 2xl:text-lg">
+          <p className="text-own mb-6 lg:mb-8 2xl:text-lg">
             Furniture is an essential component of any living space, providing
             functionality comfort, and aesthetic appeal.
           </p>
@@ -48,7 +48,7 @@ const HomePage = () => {
             </Button>
             <Button
               variant={"outline"}
-              className="rounded-full px-8 py-6 text-base font-bold text-own max-sm:px-6 max-sm:py-4 max-sm:text-sm"
+              className="text-own rounded-full px-8 py-6 text-base font-bold max-sm:px-6 max-sm:py-4 max-sm:text-sm"
               asChild
             >
               <Link to={"#"}>Explore</Link>

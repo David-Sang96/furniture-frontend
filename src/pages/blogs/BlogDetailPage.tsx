@@ -3,7 +3,7 @@ import RichTextRenderer from "@/components/blogs/RichTextRenderer";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { posts } from "@/data/posts";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router";
 
 const BlogDetailPage = () => {
   const { postId } = useParams();
@@ -43,7 +43,7 @@ const BlogDetailPage = () => {
               </div>
             </>
           ) : (
-            <p className="mb-16 mt-8 text-center text-xl font-bold text-muted-foreground lg:mt-24">
+            <p className="text-muted-foreground mb-16 mt-8 text-center text-xl font-bold lg:mt-24">
               No post found
             </p>
           )}
@@ -67,7 +67,7 @@ const BlogDetailPage = () => {
                   alt="blog post"
                   className="w-1/4 rounded"
                 />
-                <div className="line-clamp-2 w-3/4 text-sm font-[500] text-muted-foreground">
+                <div className="text-muted-foreground line-clamp-2 w-3/4 text-sm font-[500]">
                   <p className="">{post.content}</p>
                   <i className="">... see more</i>
                 </div>

@@ -4,7 +4,7 @@ import ProductCard from "@/components/products/ProductCard";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { products } from "@/data/products";
 import Autoplay from "embla-carousel-autoplay";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router";
 
 import { AddToCartForm } from "@/components/products/AddToCartForm";
 import AddToFavorite from "@/components/products/AddToFavorite";

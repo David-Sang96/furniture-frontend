@@ -7,7 +7,7 @@ import HomePage from "@/pages/HomePage";
 import ProductDetailPage from "@/pages/products/ProductDetailPage";
 import ProductPage from "@/pages/products/ProductPage";
 import { lazy, Suspense } from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router";
 
 const BlogRootLayout = lazy(() => import("@/layouts/BlogRootLayout"));
 const BlogDetailPage = lazy(() => import("@/pages/blogs/BlogDetailPage"));

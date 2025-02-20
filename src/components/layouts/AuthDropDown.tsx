@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { User } from "@/types";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
 
@@ -45,7 +45,7 @@ function AuthDropDown({ user }: AuthDropDownProps) {
             <p className="text-sm font-medium leading-none">
               {user.firstName} {user.lastName}
             </p>
-            <p className="text-sm leading-none text-muted-foreground">
+            <p className="text-muted-foreground text-sm leading-none">
               {user.email}
             </p>
           </div>
