@@ -6,8 +6,10 @@ import ErrorPage from "@/pages/ErrorPage";
 import HomePage from "@/pages/HomePage";
 import ProductDetailPage from "@/pages/products/ProductDetailPage";
 import ProductPage from "@/pages/products/ProductPage";
+import { loginFormAction, logoutAction } from "@/router/action";
+import { homeLoader, loginLoader } from "@/router/loader";
 import { lazy, Suspense } from "react";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, redirect } from "react-router";
 
 const BlogRootLayout = lazy(() => import("@/layouts/BlogRootLayout"));
 const BlogDetailPage = lazy(() => import("@/pages/blogs/BlogDetailPage"));
@@ -23,7 +25,7 @@ export const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <HomePage />, loader: homeLoader },
       { path: "about", element: <AboutPage /> },
       {
         path: "blogs",
@@ -68,6 +70,8 @@ export const router = createBrowserRouter([
         <LoginPage />
       </Suspense>
     ),
+    action: loginFormAction,
+    loader: loginLoader,
   },
   {
     path: "/register",
@@ -77,4 +81,5 @@ export const router = createBrowserRouter([
       </Suspense>
     ),
   },
+  { path: "/logout", action: logoutAction, loader: () => redirect("/") },
 ]);

@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { User } from "@/types";
-import { Link } from "react-router";
+import { Form, Link } from "react-router";
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
 
@@ -45,7 +45,7 @@ function AuthDropDown({ user }: AuthDropDownProps) {
             <p className="text-sm font-medium leading-none">
               {user.firstName} {user.lastName}
             </p>
-            <p className="text-muted-foreground text-sm leading-none">
+            <p className="text-sm leading-none text-muted-foreground">
               {user.email}
             </p>
           </div>
@@ -53,15 +53,15 @@ function AuthDropDown({ user }: AuthDropDownProps) {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link to={"#"}>
-              <Icons.dashBoard className="mr-2 size-4" aria-hidden="true" />
+            <Link to={"#"} className="cursor-pointer">
+              <Icons.dashBoard className="r mr-2 size-4" aria-hidden="true" />
               Dashboard
               <DropdownMenuShortcut>⇧⌘D</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link to={"#"}>
-              <Icons.gear className="mr-2 size-4" aria-hidden="true" />
+            <Link to={"#"} className="cursor-pointer">
+              <Icons.gear className="r mr-2 size-4" aria-hidden="true" />
               Setting
               <DropdownMenuShortcut>⇧⌘S</DropdownMenuShortcut>
             </Link>
@@ -69,11 +69,22 @@ function AuthDropDown({ user }: AuthDropDownProps) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link to={"#"}>
-            <Icons.exit className="mr-2 size-4" aria-hidden="true" />
+          {/* <Link to={"/logout"} className="cursor-pointer">
+            <Icons.exit className="r mr-2 size-4" aria-hidden="true" />
             Log out
             <DropdownMenuShortcut>⇧⌘L</DropdownMenuShortcut>
-          </Link>
+          </Link> */}
+          <Form method="POST" action="/logout">
+            <Button
+              type="submit"
+              variant={"ghost"}
+              className="w-full p-0 font-normal hover:bg-transparent"
+            >
+              <Icons.exit className="r mr-2 size-4" aria-hidden="true" />
+              Log out
+              <DropdownMenuShortcut>⇧⌘L</DropdownMenuShortcut>
+            </Button>
+          </Form>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
