@@ -50,7 +50,7 @@ function ProductCard({ product, className }: ProductCardProps) {
         {product.status === "active" ? (
           <Button
             size={isDesktop ? "lg" : "sm"}
-            className="w-full rounded-sm font-bold text-white"
+            className="w-full rounded-sm font-bold"
             aria-label="Active"
           >
             <Icons.plus />

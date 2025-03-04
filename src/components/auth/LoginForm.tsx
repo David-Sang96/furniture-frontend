@@ -96,11 +96,7 @@ export default function LoginForm() {
             />
 
             <div className="space-y-2">
-              <Button
-                type="submit"
-                className="w-full dark:text-white"
-                disabled={isSubmitting}
-              >
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting && (
                   <LoaderCircle className="animate-spin" aria-hidden="true" />
                 )}
@@ -119,7 +115,7 @@ export default function LoginForm() {
         </Form>
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{" "}
-          <Link to="/register" className="underline">
+          <Link to="/register" className="text-primary underline">
             Sign Up
           </Link>
         </div>

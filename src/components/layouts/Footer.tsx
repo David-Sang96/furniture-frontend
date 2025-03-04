@@ -19,7 +19,7 @@ const Footer = () => {
             {siteConfig.footerNav.map((footerItem) => (
               <div className="space-y-3" key={footerItem.title}>
                 <h4 className="font-medium 2xl:text-lg">{footerItem.title}</h4>
-                <ul className="text-muted-foreground space-y-3 text-sm 2xl:text-base">
+                <ul className="space-y-3 text-sm text-muted-foreground 2xl:text-base">
                   {footerItem.items.map((item) => (
                     <li key={item.title}>
                       <Link
