@@ -3,7 +3,7 @@ import useAuthStore, { Status } from "@/store/authStore";
 import { AxiosError } from "axios";
 import { ActionFunctionArgs, redirect } from "react-router";
 
-const getErrorMessage = (error: unknown, defaultMsg: string): string => {
+export const getErrorMessage = (error: unknown, defaultMsg: string): string => {
   if (error instanceof AxiosError) {
     return error.response?.data || { message: defaultMsg };
   } else throw error;

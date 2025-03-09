@@ -1,15 +1,32 @@
+import { postQuery, productQuery } from "@/api/query";
 import BlogCard from "@/components/blogs/BlogCard";
 import CarouselCard from "@/components/products/CarouselCard";
 import ProductCard from "@/components/products/ProductCard";
+import HomePageSkeleton from "@/components/skeletons/HomePageSkeleton";
 import { Button } from "@/components/ui/button";
 import CouchImg from "@/data/images/couch.png";
-import { posts } from "@/data/posts";
-import { products } from "@/data/products";
+import { Product } from "@/types";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 
-const sampleProducts = products.slice(0, 4);
-
 const HomePage = () => {
+  // const { productsData, postsData } = useLoaderData();
+
+  const {
+    data: productsData,
+    isLoading: isLoadingProduct,
+    isError: isErrorProduct,
+    error: productError,
+    refetch: productRefetch,
+  } = useQuery(productQuery("?limit=8"));
+  const {
+    data: postsData,
+    isLoading: isLoadingPost,
+    isError: isErrorPost,
+    error: postError,
+    refetch: postRefetch,
+  } = useQuery(postQuery("?limit=3"));
+
   const Title = ({
     title,
     href,
@@ -26,6 +43,29 @@ const HomePage = () => {
       </Link>
     </div>
   );
+
+  if (isLoadingProduct || isLoadingPost) {
+    return <HomePageSkeleton />;
+  }
+
+  if (isErrorProduct || isErrorPost) {
+    return (
+      <div className="container mx-auto my-32 flex flex-1 place-content-center">
+        <div className="text-center text-red-400">
+          <p className="mb-4">{productError?.message || postError?.message}</p>
+          <Button
+            onClick={() => {
+              productRefetch();
+              postRefetch();
+            }}
+            variant={"secondary"}
+          >
+            Retry
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section>
@@ -60,7 +100,7 @@ const HomePage = () => {
         <img src={CouchImg} alt="Couch" className="w-full lg:w-3/5" />
       </div>
       <div className="overflow-hidden lg:px-10">
-        <CarouselCard products={products} />
+        {productsData && <CarouselCard products={productsData.products} />}
       </div>
       <Title
         title="Featured Products"
@@ -68,13 +108,16 @@ const HomePage = () => {
         sideText="View All Products"
       />
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {sampleProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {productsData &&
+          productsData.products
+            .slice(0, 4)
+            .map((product: Product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
       </div>
 
       <Title title="Recent Blog" href="/blogs" sideText="View All Posts" />
-      <BlogCard posts={posts} />
+      {postsData && <BlogCard posts={postsData.posts} />}
     </section>
   );
 };

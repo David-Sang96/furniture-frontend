@@ -19,6 +19,7 @@ import {
 import {
   authCheckLoader,
   confirmPaswordLoader,
+  homeLoader,
   otpLoader,
 } from "@/router/loader";
 import { lazy, Suspense } from "react";
@@ -32,13 +33,13 @@ const AuthRootLayout = lazy(() => import("@/pages/auth/AuthRootLayout"));
 
 const SuspenseFallback = () => <div className="text-center">Loading...</div>;
 
-export const router = createBrowserRouter([
+export const routerActionLoader = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <HomePage />, loader: homeLoader },
       { path: "about", element: <AboutPage /> },
       {
         path: "blogs",

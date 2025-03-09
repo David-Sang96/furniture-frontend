@@ -18,6 +18,8 @@ interface ProductCardProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
   product: Product;
 }
 
+const imgUrl = import.meta.env.VITE_IMG_URL;
+
 function ProductCard({ product, className }: ProductCardProps) {
   const isDesktop = useMediaQuery({ minWidth: 1530 });
 
@@ -27,9 +29,9 @@ function ProductCard({ product, className }: ProductCardProps) {
         <CardHeader className="border-b p-0">
           <AspectRatio ratio={1 / 1} className="bg-muted">
             <img
-              src={product.images[0]}
+              src={imgUrl + product.images[0].path}
               alt=" product image"
-              className="size-full object-cover"
+              className="size-full object-center"
               loading="lazy"
             />
           </AspectRatio>
