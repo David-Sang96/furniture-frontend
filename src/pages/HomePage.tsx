@@ -1,4 +1,4 @@
-import { postQuery, productQuery } from "@/api/query";
+import { postsQuery, productsQuery } from "@/api/query";
 import BlogCard from "@/components/blogs/BlogCard";
 import CarouselCard from "@/components/products/CarouselCard";
 import ProductCard from "@/components/products/ProductCard";
@@ -48,8 +48,8 @@ const HomePage = () => {
   //   );
   // }
 
-  const { data: productsData } = useSuspenseQuery(productQuery("?limit=8"));
-  const { data: postsData } = useSuspenseQuery(postQuery("?limit=3"));
+  const { data: productsData } = useSuspenseQuery(productsQuery("?limit=8"));
+  const { data: postsData } = useSuspenseQuery(postsQuery("?limit=3"));
 
   const Title = ({
     title,

@@ -1,13 +1,20 @@
+import { onePostQuery, postsQuery } from "@/api/query";
 import BackButton from "@/components/BackButton";
 import RichTextRenderer from "@/components/blogs/RichTextRenderer";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { posts } from "@/data/posts";
-import { Link, useParams } from "react-router";
+import { Post } from "@/types";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Link, useLoaderData } from "react-router";
 
 const BlogDetailPage = () => {
-  const { postId } = useParams();
-  const post = posts.find((post) => post.id === postId);
+  const { postId } = useLoaderData();
+  const { data: postDetail } = useSuspenseQuery(onePostQuery(postId));
+  const { data: postsData } = useSuspenseQuery(postsQuery("?limit=6"));
+
+  const post = postDetail.post as Post;
+  const posts = postsData.posts as Post[];
+  const imgUrl = import.meta.env.VITE_IMG_URL;
 
   return (
     <div className="container max-md:px-0">
@@ -25,22 +32,24 @@ const BlogDetailPage = () => {
               <h2 className="mb-3 text-3xl font-bold">{post.title}</h2>
               <div className="mt-4 text-sm">
                 <span>
-                  by<span className="font-[600]"> {post.author} </span>on
-                  <span className="font-[600]"> {post.updated_at}</span>
+                  by<span className="font-[600]"> {post.user.fullName} </span>on
+                  <span className="font-[600]"> {post.updatedAt}</span>
                 </span>
               </div>
               <h3 className="my-6 font-[400]">{post.content}</h3>
               <img
-                src={post.image}
+                src={imgUrl + post.image}
                 alt={post.title}
                 className="w-full rounded-xl"
                 loading="lazy"
                 decoding="async"
               />
-              <RichTextRenderer content={post.body} className="my-8" />
+              <RichTextRenderer content={postDetail.body} className="my-8" />
               <div className="mb-12 space-x-2">
                 {post.tags.map((tag) => (
-                  <Button variant={"secondary"}>{tag}</Button>
+                  <Button variant={"secondary"} key={tag.name}>
+                    {tag.name}
+                  </Button>
                 ))}
               </div>
             </>
@@ -61,11 +70,11 @@ const BlogDetailPage = () => {
             {posts.map((post) => (
               <Link
                 to={`/blogs/${post.id}`}
-                key={post.title}
+                key={post.id}
                 className="mb-6 flex items-start gap-2"
               >
                 <img
-                  src={post.image}
+                  src={imgUrl + post.image}
                   alt="blog post"
                   className="w-1/4 rounded"
                   loading="lazy"

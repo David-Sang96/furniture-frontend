@@ -16,7 +16,7 @@ const getAllProducts = async (query?: string) => {
   return response.data;
 };
 
-export const productQuery = (query?: string) => ({
+export const productsQuery = (query?: string) => ({
   queryKey: ["products", query],
   queryFn: () => getAllProducts(query),
 });
@@ -24,7 +24,7 @@ export const productQuery = (query?: string) => ({
 const getAllPosts = (query?: string) =>
   api.get(`users/posts/infinite${query ?? ""}`).then((res) => res.data);
 
-export const postQuery = (query?: string) => ({
+export const postsQuery = (query?: string) => ({
   queryKey: ["posts", query],
   queryFn: () => getAllPosts(query),
 });
@@ -44,4 +44,17 @@ export const postInfiniteQuery = () => ({
   getNextPageParam: (lastPage, pages) => lastPage.nextCursor ?? undefined,
   // getPreviousPageParam : (firstPage,pages) => firstPage.prevCursor ?? undefined
   // maxPages : 6
+});
+
+const fetchOnePost = async (id: number) => {
+  const response = await api.get(`users/posts/${id}`);
+  if (!response) {
+    throw new Response("", { status: 404, statusText: "Not Found" });
+  }
+  return response.data;
+};
+
+export const onePostQuery = (id: number) => ({
+  queryKey: ["posts", "detail", id],
+  queryFn: () => fetchOnePost(id),
 });
