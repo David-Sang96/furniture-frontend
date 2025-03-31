@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="w-full border-t">
       <div className="container pb-8 pt-6">
-        <section className="flex flex-col justify-between gap-10 lg:gap-28 xl:flex-row">
+        <section className="flex flex-col justify-between gap-7 xl:flex-row">
           <section>
             <Link to={"/"} className="flex items-center gap-2">
               <Icons.logo className="size-6" aria-hidden="true" />

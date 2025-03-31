@@ -18,6 +18,7 @@ import {
 } from "@/router/action";
 import {
   authCheckLoader,
+  blogInfiniteLoader,
   confirmPaswordLoader,
   homeLoader,
   otpLoader,
@@ -56,6 +57,7 @@ export const routerActionLoader = createBrowserRouter([
                 <BlogPage />
               </Suspense>
             ),
+            loader: blogInfiniteLoader,
           },
           {
             path: ":postId",

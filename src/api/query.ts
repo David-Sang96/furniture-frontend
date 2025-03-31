@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { QueryClient } from "@tanstack/react-query";
 import api from ".";
 
@@ -26,4 +27,21 @@ const getAllPosts = (query?: string) =>
 export const postQuery = (query?: string) => ({
   queryKey: ["posts", query],
   queryFn: () => getAllPosts(query),
+});
+
+const fetchInfinitePosts = async ({ pageParam = null }) => {
+  const query = pageParam ? `?limit=6&cursor=${pageParam}` : "?limit=6";
+  const response = await api.get(`users/posts/infinite${query}`);
+  return response.data;
+};
+
+export const postInfiniteQuery = () => ({
+  queryKey: ["products", "infinite"],
+  queryFn: fetchInfinitePosts,
+  initialPageParam: null, // start with no cursor
+  // @ts-expect-error notype
+  // able to access data from api response
+  getNextPageParam: (lastPage, pages) => lastPage.nextCursor ?? undefined,
+  // getPreviousPageParam : (firstPage,pages) => firstPage.prevCursor ?? undefined
+  // maxPages : 6
 });

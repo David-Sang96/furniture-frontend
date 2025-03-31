@@ -31,8 +31,9 @@ function ProductCard({ product, className }: ProductCardProps) {
             <img
               src={imgUrl + product.images[0].path}
               alt=" product image"
-              className="size-full object-center"
+              className="size-full object-contain"
               loading="lazy"
+              decoding="async"
             />
           </AspectRatio>
         </CardHeader>

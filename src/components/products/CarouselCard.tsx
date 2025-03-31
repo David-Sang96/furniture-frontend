@@ -33,8 +33,9 @@ export default function CarouselCard({ products }: CarouselCardProps) {
               <img
                 src={imgUrl + product.images[0].path}
                 alt={product.name}
-                className="size-28 rounded-md"
+                className="h-28 rounded-md"
                 loading="lazy"
+                decoding="async"
               />
               <div>
                 <h3 className="line-clamp-1 text-sm font-bold 2xl:text-base">

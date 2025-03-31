@@ -34,6 +34,8 @@ const BlogDetailPage = () => {
                 src={post.image}
                 alt={post.title}
                 className="w-full rounded-xl"
+                loading="lazy"
+                decoding="async"
               />
               <RichTextRenderer content={post.body} className="my-8" />
               <div className="mb-12 space-x-2">
@@ -43,7 +45,7 @@ const BlogDetailPage = () => {
               </div>
             </>
           ) : (
-            <p className="text-muted-foreground mb-16 mt-8 text-center text-xl font-bold lg:mt-24">
+            <p className="mb-16 mt-8 text-center text-xl font-bold text-muted-foreground lg:mt-24">
               No post found
             </p>
           )}
@@ -66,8 +68,10 @@ const BlogDetailPage = () => {
                   src={post.image}
                   alt="blog post"
                   className="w-1/4 rounded"
+                  loading="lazy"
+                  decoding="async"
                 />
-                <div className="text-muted-foreground line-clamp-2 w-3/4 text-sm font-[500]">
+                <div className="line-clamp-2 w-3/4 text-sm font-[500] text-muted-foreground">
                   <p className="">{post.content}</p>
                   <i className="">... see more</i>
                 </div>

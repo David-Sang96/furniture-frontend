@@ -6,6 +6,8 @@ import { useNavigation } from "react-router";
 //   const fetching = useIsFetching() > 0;
 
 //   if (fetching || navigation.state !== "idle") {
+//  navigation.state === "loading" A page transition is happening.
+//  navigation.state === "submitting" A form submission is happening.
 //     return (
 //       <div className="fixed left-0 top-0 z-50 h-2.5 w-full overflow-hidden bg-gray-200">
 //         <div className="animate-progress absolute h-full w-full rounded-r-lg bg-own" />

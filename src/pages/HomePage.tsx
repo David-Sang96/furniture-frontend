@@ -2,30 +2,54 @@ import { postQuery, productQuery } from "@/api/query";
 import BlogCard from "@/components/blogs/BlogCard";
 import CarouselCard from "@/components/products/CarouselCard";
 import ProductCard from "@/components/products/ProductCard";
-import HomePageSkeleton from "@/components/skeletons/HomePageSkeleton";
 import { Button } from "@/components/ui/button";
 import CouchImg from "@/data/images/couch.png";
 import { Product } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 
 const HomePage = () => {
   // const { productsData, postsData } = useLoaderData();
+  // const {
+  //   data: productsData,
+  //   isLoading: isLoadingProduct,
+  //   isError: isErrorProduct,
+  //   error: productError,
+  //   refetch: productRefetch,
+  // } = useQuery(productQuery("?limit=8"));
+  // const {
+  //   data: postsData,
+  //   isLoading: isLoadingPost,
+  //   isError: isErrorPost,
+  //   error: postError,
+  //   refetch: postRefetch,
+  // } = useQuery(postQuery("?limit=3"));
 
-  const {
-    data: productsData,
-    isLoading: isLoadingProduct,
-    isError: isErrorProduct,
-    error: productError,
-    refetch: productRefetch,
-  } = useQuery(productQuery("?limit=8"));
-  const {
-    data: postsData,
-    isLoading: isLoadingPost,
-    isError: isErrorPost,
-    error: postError,
-    refetch: postRefetch,
-  } = useQuery(postQuery("?limit=3"));
+  // if (isLoadingProduct || isLoadingPost) {
+  //   return <HomePageSkeleton />;
+  // }
+
+  // if (isErrorProduct || isErrorPost) {
+  //   return (
+  //     <div className="container mx-auto my-32 flex flex-1 place-content-center">
+  //       <div className="text-center text-red-400">
+  //         <p className="mb-4">{productError?.message || postError?.message}</p>
+  //         <Button
+  //           onClick={() => {
+  //             productRefetch();
+  //             postRefetch();
+  //           }}
+  //           variant={"secondary"}
+  //         >
+  //           Retry
+  //         </Button>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
+  const { data: productsData } = useSuspenseQuery(productQuery("?limit=8"));
+  const { data: postsData } = useSuspenseQuery(postQuery("?limit=3"));
 
   const Title = ({
     title,
@@ -43,29 +67,6 @@ const HomePage = () => {
       </Link>
     </div>
   );
-
-  if (isLoadingProduct || isLoadingPost) {
-    return <HomePageSkeleton />;
-  }
-
-  if (isErrorProduct || isErrorPost) {
-    return (
-      <div className="container mx-auto my-32 flex flex-1 place-content-center">
-        <div className="text-center text-red-400">
-          <p className="mb-4">{productError?.message || postError?.message}</p>
-          <Button
-            onClick={() => {
-              productRefetch();
-              postRefetch();
-            }}
-            variant={"secondary"}
-          >
-            Retry
-          </Button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <section>
@@ -97,7 +98,13 @@ const HomePage = () => {
         </div>
 
         {/* Image Section */}
-        <img src={CouchImg} alt="Couch" className="w-full lg:w-3/5" />
+        <img
+          src={CouchImg}
+          alt="Couch"
+          className="w-full lg:w-3/5"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
       <div className="overflow-hidden lg:px-10">
         {productsData && <CarouselCard products={productsData.products} />}

@@ -17,6 +17,7 @@ const BlogCard = ({ posts }: BlogCardProps) => {
             alt="blog post"
             className="mb-4 w-full rounded-2xl object-contain"
             loading="lazy"
+            decoding="async"
           />
           <h3 className="ml-4 line-clamp-1 font-semibold">{post.title}</h3>
           <div>

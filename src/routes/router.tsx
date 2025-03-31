@@ -20,6 +20,7 @@ import {
   authCheckLoader,
   confirmPaswordLoader,
   otpLoader,
+  postDetailLoader,
 } from "@/router/loader";
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, redirect } from "react-router";
@@ -63,6 +64,7 @@ export const router = createBrowserRouter([
                 <BlogDetailPage />
               </Suspense>
             ),
+            loader: postDetailLoader,
           },
         ],
       },

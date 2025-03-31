@@ -30,7 +30,6 @@ export function ConfirmPasswordForm({
   const navigator = useNavigation();
   const isSubmitting = navigator.state === "submitting";
   const actionData = useActionData() as { message?: string; error?: string };
-  console.log(actionData);
 
   const onSubmit = (values: z.infer<typeof passwordSchema>) => {
     submit(values, { method: "POST", action: "/register/confirm-password" });

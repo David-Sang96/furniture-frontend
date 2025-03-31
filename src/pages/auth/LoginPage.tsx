@@ -23,6 +23,8 @@ function LoginPage() {
             src={Banner}
             alt="furniture shop"
             className="h-full max-h-screen w-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </div>

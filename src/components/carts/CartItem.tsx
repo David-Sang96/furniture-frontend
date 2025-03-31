@@ -1,5 +1,5 @@
-import { Cart } from "@/types";
 import { formatPrice } from "@/lib/utils";
+import { Cart } from "@/types";
 import { Separator } from "../ui/separator";
 import Editable from "./Editable";
 
@@ -12,9 +12,11 @@ function CartItem({ cart }: CartItemProps) {
     <div className="mt-4 space-y-3">
       <div className="flex gap-4">
         <img
-          src={cart.image.url}
+          src={cart.image.path}
           alt="cart picture"
           className="w-16 object-cover"
+          loading="lazy"
+          decoding="async"
         />
         <div className="">
           <span className="line-clamp-1 text-sm font-medium">{cart.name}</span>

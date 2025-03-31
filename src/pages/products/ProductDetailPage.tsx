@@ -52,6 +52,7 @@ const ProductDetailPage = () => {
                     alt={product.name}
                     className="size-full rounded-md object-cover"
                     loading="lazy"
+                    decoding="async"
                   />
                 </AspectRatio>
               </CarouselItem>
