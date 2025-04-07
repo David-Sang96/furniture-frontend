@@ -2,10 +2,10 @@ import BackButton from "@/components/BackButton";
 import { Icons } from "@/components/icons";
 import ProductCard from "@/components/products/ProductCard";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { products } from "@/data/products";
 import Autoplay from "embla-carousel-autoplay";
-import { Link, useParams } from "react-router";
+import { useLoaderData } from "react-router";
 
+import { oneProductQuery, productsQuery } from "@/api/query";
 import { AddToCartForm } from "@/components/products/AddToCartForm";
 import AddToFavorite from "@/components/products/AddToFavorite";
 import Rating from "@/components/products/Rating";
@@ -23,11 +23,18 @@ import {
 } from "@/components/ui/carousel";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/utils";
+import { Product } from "@/types";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import React from "react";
 
 const ProductDetailPage = () => {
-  const { productId } = useParams();
-  const product = products.find((product) => product.id === productId);
+  const { productId } = useLoaderData();
+  const { data: productDetail } = useSuspenseQuery(oneProductQuery(productId));
+  const { data: productsData } = useSuspenseQuery(productsQuery("?limit=4"));
+
+  const product = productDetail.product as Product;
+  const products = productsData.products as Product[];
+  const imgUrl = import.meta.env.VITE_IMG_URL;
 
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true }),
@@ -36,19 +43,19 @@ const ProductDetailPage = () => {
   return (
     <div>
       <BackButton>
-        <Link to={"/products"}>
+        <div>
           <Icons.arrowLeft /> All Products
-        </Link>
+        </div>
       </BackButton>
       {/* Top Right Section */}
       <section className="mb-8 flex flex-col gap-8 md:flex-row lg:gap-16 lg:p-3">
         <Carousel plugins={[plugin.current]} className="flex-1">
           <CarouselContent>
-            {product?.images.map((image, index) => (
-              <CarouselItem key={index}>
+            {product.images.map((image) => (
+              <CarouselItem key={image.id}>
                 <AspectRatio ratio={1 / 1} className="bg-muted p-1">
                   <img
-                    src={image}
+                    src={imgUrl + image.path}
                     alt={product.name}
                     className="size-full rounded-md object-cover"
                     loading="lazy"
@@ -78,7 +85,7 @@ const ProductDetailPage = () => {
               rating={Number(product?.rating)}
             />
           </div>
-          <AddToCartForm isAvailable={product?.status === "active"} />
+          <AddToCartForm isAvailable={product?.status === "ACTIVE"} />
           <Separator className="my-5" />
           <Accordion
             type="single"
@@ -104,13 +111,14 @@ const ProductDetailPage = () => {
         </h2>
         <ScrollArea className="pb-">
           <div className="flex gap-4">
-            {products.slice(0, 4).map((product) => (
-              <ProductCard
-                product={product}
-                key={product.id}
-                className="min-w-[260px]"
-              />
-            ))}
+            {products?.length > 0 &&
+              products.map((product) => (
+                <ProductCard
+                  product={product}
+                  key={product.id}
+                  className="min-w-[260px]"
+                />
+              ))}
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>

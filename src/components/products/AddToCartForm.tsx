@@ -89,7 +89,9 @@ export function AddToCartForm({ isAvailable }: AddToCartFormProps) {
             type="button"
             aria-label="Buy now"
             size={"sm"}
-            className={cn("w-full font-bold")}
+            className={cn(
+              "w-full bg-own font-bold hover:bg-own/80 dark:text-white",
+            )}
             disabled={!isAvailable}
           >
             Buy Now

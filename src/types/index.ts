@@ -26,7 +26,7 @@ export type Product = {
   name: string;
   description: string;
   images: Image[];
-  categoryId: string;
+  categoryId?: string;
   price: number;
   discount: number;
   rating: number;
@@ -47,7 +47,12 @@ export type Post = {
 
 export type Category = {
   id: number;
-  label: string;
+  name: string;
+};
+
+export type Type = {
+  id: number;
+  name: string;
 };
 
 export type User = {

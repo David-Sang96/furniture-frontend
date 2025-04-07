@@ -1,8 +1,11 @@
 import { authApi } from "@/api";
 import {
+  categoryAndTypeQuery,
   onePostQuery,
+  oneProductQuery,
   postInfiniteQuery,
   postsQuery,
+  productInfiniteQuery,
   productsQuery,
   queryClient,
 } from "@/api/query";
@@ -24,13 +27,10 @@ import { LoaderFunctionArgs, redirect } from "react-router";
 //   }
 // };
 
-export const homeLoader = async () => {
-  await queryClient.ensureQueryData(productsQuery("?limit=8"));
-  await queryClient.ensureQueryData(postsQuery("?limit=3"));
-  return null;
-};
-
 export const authCheckLoader = async () => {
+  // Wait 2 seconds before making the request to avoid network issues after waking up
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
   try {
     const res = await authApi.get("auth-check");
     if (res.status !== 200) {
@@ -40,6 +40,12 @@ export const authCheckLoader = async () => {
   } catch (error) {
     console.log("loginLoader error:", error);
   }
+};
+
+export const homeLoader = async () => {
+  await queryClient.ensureQueryData(productsQuery("?limit=8"));
+  await queryClient.ensureQueryData(postsQuery("?limit=3"));
+  return null;
 };
 
 export const otpLoader = () => {
@@ -71,4 +77,20 @@ export const postDetailLoader = async ({ params }: LoaderFunctionArgs) => {
   await queryClient.ensureQueryData(postsQuery("?limit=6"));
 
   return { postId: params.postId };
+};
+
+export const productsInfiniteLoader = async () => {
+  await queryClient.ensureQueryData(categoryAndTypeQuery());
+  await queryClient.prefetchInfiniteQuery(productInfiniteQuery());
+  return null;
+};
+
+export const productDetailLoader = async ({ params }: LoaderFunctionArgs) => {
+  if (!params.productId) {
+    throw new Error("No Product ID provided");
+  }
+  await queryClient.ensureQueryData(oneProductQuery(Number(params.productId)));
+  await queryClient.ensureQueryData(productsQuery("?limit=4"));
+
+  return { productId: params.productId };
 };

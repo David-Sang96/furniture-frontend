@@ -12,34 +12,52 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Category } from "@/types";
+import { Category, Type } from "@/types";
+import { useEffect } from "react";
 
 interface ProductFilterProps {
-  filterList: { categories: Category[]; types: Category[] };
+  categories: Category[];
+  types: Type[];
+  selectedCat: string[];
+  selectedType: string[];
+  filterFn: (cat: string[], type: string[]) => void;
 }
 
 const FilterSchema = z.object({
-  categories: z
-    .array(z.string())
-    .refine((value) => value.some((item) => item), {
-      message: "You have to select at least one category.",
-    }),
-  types: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: "You have to select at least one type.",
-  }),
+  categories: z.array(z.string()),
+  // .refine((value) => value.some((item) => item), {
+  //   message: "You have to select at least one category.",
+  // }),
+  types: z.array(z.string()),
+  // .refine((value) => value.some((item) => item), {
+  //   message: "You have to select at least one type.",
+  // }),
 });
 
-export default function ProductFilter({ filterList }: ProductFilterProps) {
+export default function ProductFilter({
+  categories,
+  types,
+  selectedCat,
+  selectedType,
+  filterFn,
+}: ProductFilterProps) {
   const form = useForm<z.infer<typeof FilterSchema>>({
     resolver: zodResolver(FilterSchema),
     defaultValues: {
-      categories: [],
-      types: [],
+      categories: selectedCat,
+      types: selectedType,
     },
   });
 
-  function onSubmit(data: z.infer<typeof FilterSchema>) {
-    console.log(data);
+  useEffect(() => {
+    form.reset({
+      categories: selectedCat,
+      types: selectedType,
+    });
+  }, [selectedCat, selectedType, form]);
+
+  function onSubmit({ categories, types }: z.infer<typeof FilterSchema>) {
+    filterFn(categories, types);
   }
 
   return (
@@ -55,7 +73,7 @@ export default function ProductFilter({ filterList }: ProductFilterProps) {
                   <div className="mb-4">
                     <FormLabel className="text-base">Furniture Types</FormLabel>
                   </div>
-                  {filterList.types.map((type) => (
+                  {types.map((type: Type) => (
                     <FormField
                       key={type.id}
                       control={form.control}
@@ -68,20 +86,26 @@ export default function ProductFilter({ filterList }: ProductFilterProps) {
                           >
                             <FormControl>
                               <Checkbox
-                                checked={field.value?.includes(type.id)}
+                                checked={field.value?.includes(
+                                  type.id.toString(),
+                                )}
                                 onCheckedChange={(checked) => {
                                   return checked
-                                    ? field.onChange([...field.value, type.id])
+                                    ? field.onChange([
+                                        ...field.value,
+                                        type.id.toString(),
+                                      ])
                                     : field.onChange(
                                         field.value?.filter(
-                                          (value) => value !== type.id,
+                                          (value) =>
+                                            value !== type.id.toString(),
                                         ),
                                       );
                                 }}
                               />
                             </FormControl>
                             <FormLabel className="text-sm font-normal">
-                              {type.label}
+                              {type.name}
                             </FormLabel>
                           </FormItem>
                         );
@@ -104,7 +128,7 @@ export default function ProductFilter({ filterList }: ProductFilterProps) {
                       Furniture Made By
                     </FormLabel>
                   </div>
-                  {filterList.categories.map((category) => (
+                  {categories.map((category: Category) => (
                     <FormField
                       key={category.id}
                       control={form.control}
@@ -117,23 +141,26 @@ export default function ProductFilter({ filterList }: ProductFilterProps) {
                           >
                             <FormControl>
                               <Checkbox
-                                checked={field.value?.includes(category.id)}
+                                checked={field.value?.includes(
+                                  category.id.toString(),
+                                )}
                                 onCheckedChange={(checked) => {
                                   return checked
                                     ? field.onChange([
                                         ...field.value,
-                                        category.id,
+                                        category.id.toString(),
                                       ])
                                     : field.onChange(
                                         field.value?.filter(
-                                          (value) => value !== category.id,
+                                          (value) =>
+                                            value !== category.id.toString(),
                                         ),
                                       );
                                 }}
                               />
                             </FormControl>
                             <FormLabel className="text-sm font-normal">
-                              {category.label}
+                              {category.name}
                             </FormLabel>
                           </FormItem>
                         );

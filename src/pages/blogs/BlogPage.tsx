@@ -44,9 +44,7 @@ const BlogPage = () => {
               : "Nothing more to load"}
         </Button>
       </div>
-      <div className="">
-        {isFetching && !isFetchingNextPage ? "Fetching..." : null}
-      </div>
+      <div>{isFetching && !isFetchingNextPage ? "Fetching..." : null}</div>
     </section>
   );
 };

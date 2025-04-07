@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { useFilterStore } from "@/store/filterStore";
 import { MainNavItem } from "@/types";
 import React from "react";
 import { Link } from "react-router";
@@ -36,14 +37,14 @@ const MainNavigation = ({ items }: MainNavigationProps) => {
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <Link
-                        className="from-muted/50 to-muted flex size-full select-none flex-col justify-end rounded-md bg-gradient-to-b p-6 no-underline outline-none focus:shadow-md"
+                        className="flex size-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                         to="/"
                       >
                         <Icons.logo className="size-6" aria-hidden="true" />
                         <div className="mb-2 mt-4 text-lg font-medium">
                           {siteConfig.name}
                         </div>
-                        <p className="text-muted-foreground text-sm leading-tight">
+                        <p className="text-sm leading-tight text-muted-foreground">
                           {siteConfig.description}
                         </p>
                       </Link>
@@ -83,6 +84,9 @@ const ListItem = React.forwardRef<
   React.ElementRef<"a">,
   React.ComponentPropsWithoutRef<"a">
 >(({ className, title, children, href, ...props }, ref) => {
+  const setCategory = useFilterStore((store) => store.setCategory);
+  const catId = href?.split("=")[1];
+
   return (
     <li>
       <NavigationMenuLink asChild>
@@ -90,13 +94,14 @@ const ListItem = React.forwardRef<
           ref={ref}
           to={href as string}
           className={cn(
-            "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className,
           )}
           {...props}
+          onClick={() => setCategory([catId!])}
         >
           <div className="font-medium leading-none">{title}</div>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
         </Link>

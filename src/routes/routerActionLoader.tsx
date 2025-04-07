@@ -23,6 +23,8 @@ import {
   homeLoader,
   otpLoader,
   postDetailLoader,
+  productDetailLoader,
+  productsInfiniteLoader,
 } from "@/router/loader";
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, redirect } from "react-router";
@@ -73,10 +75,22 @@ export const routerActionLoader = createBrowserRouter([
       },
       {
         path: "products",
-        element: <ProductRootLayout />,
+        element: (
+          <Suspense fallback={<SuspenseFallback />}>
+            <ProductRootLayout />
+          </Suspense>
+        ),
         children: [
-          { index: true, element: <ProductPage /> },
-          { path: ":productId", element: <ProductDetailPage /> },
+          {
+            index: true,
+            element: <ProductPage />,
+            loader: productsInfiniteLoader,
+          },
+          {
+            path: ":productId",
+            element: <ProductDetailPage />,
+            loader: productDetailLoader,
+          },
         ],
       },
     ],

@@ -50,10 +50,10 @@ function ProductCard({ product, className }: ProductCardProps) {
         </CardContent>
       </Link>
       <CardFooter className="p-4 pt-1">
-        {product.status === "active" ? (
+        {product.status === "ACTIVE" ? (
           <Button
             size={isDesktop ? "lg" : "sm"}
-            className="w-full rounded-sm font-bold"
+            className="w-full rounded-sm bg-own font-bold hover:bg-own/80 dark:text-white"
             aria-label="Active"
           >
             <Icons.plus />
