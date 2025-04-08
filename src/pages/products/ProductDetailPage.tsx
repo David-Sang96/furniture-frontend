@@ -83,6 +83,7 @@ const ProductDetailPage = () => {
             <AddToFavorite
               productId={String(product?.id)}
               rating={Number(product?.rating)}
+              isFavorite={!!product.users?.length}
             />
           </div>
           <AddToCartForm isAvailable={product?.status === "ACTIVE"} />

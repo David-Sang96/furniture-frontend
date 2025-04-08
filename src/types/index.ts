@@ -21,6 +21,8 @@ export type Image = {
   path: string;
 };
 
+export type ProductUser = { id: number };
+
 export type Product = {
   id: number;
   name: string;
@@ -32,6 +34,7 @@ export type Product = {
   rating: number;
   inventory: number;
   status: string;
+  users?: ProductUser[];
 };
 
 export type Post = {

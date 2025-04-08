@@ -7,10 +7,10 @@ import ProductCard from "@/components/products/ProductCard";
 import ProductFilter from "@/components/products/ProductFilter";
 import { Button } from "@/components/ui/button";
 import { useFilterStore } from "@/store/filterStore";
+
 import validateQueryString from "@/utils/validateQueryString";
 
 import { useInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 import { useSearchParams } from "react-router";
 
 const ProductPage = () => {
@@ -24,8 +24,10 @@ const ProductPage = () => {
   const rawCategory = searchParams.get("category");
   const rawType = searchParams.get("type");
 
-  const selectedCategory = validateQueryString(rawCategory);
-  const selectedtype = validateQueryString(rawType);
+  const selectedCategory =
+    prevCategory.length > 0 ? prevCategory : validateQueryString(rawCategory);
+  const selectedtype =
+    prevType.length > 0 ? prevType : validateQueryString(rawType);
 
   const catParam =
     selectedCategory.length > 0 ? selectedCategory.join(",") : null;
@@ -35,16 +37,8 @@ const ProductPage = () => {
   // prettier-ignore
   const {data,status,error,isFetching,isFetchingNextPage,fetchNextPage,hasNextPage ,refetch}
    = useInfiniteQuery(productInfiniteQuery(catParam,typeParam));
-  const products = data?.pages.flatMap((item) => item.products) ?? [];
 
-  useEffect(() => {
-    const newParams = new URLSearchParams();
-    if (prevCategory.length > 0)
-      newParams.set("category", encodeURIComponent(prevCategory.join(",")));
-    if (prevType.length > 0)
-      newParams.set("type", encodeURIComponent(prevType.join(",")));
-    setSearchParams(newParams);
-  }, []);
+  const products = data?.pages.flatMap((item) => item.products) ?? [];
 
   const filterChangeHandler = (categories: string[], types: string[]) => {
     const newParams = new URLSearchParams();

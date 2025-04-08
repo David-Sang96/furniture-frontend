@@ -9,7 +9,7 @@ function BackButton({ children }: { children: ReactNode }) {
     <Button
       variant={"outline"}
       asChild
-      className="mb-6 mt-8"
+      className="mb-6 mt-8 cursor-pointer"
       onClick={() => navigate(-1)}
     >
       {children}

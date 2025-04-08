@@ -1,4 +1,5 @@
 import api, { authApi } from "@/api";
+import { queryClient } from "@/api/query";
 import useAuthStore, { Status } from "@/store/authStore";
 import { AxiosError } from "axios";
 import { ActionFunctionArgs, redirect } from "react-router";
@@ -129,5 +130,37 @@ export const registerConfirmPasswordAction = async ({
     return redirect("/");
   } catch (error) {
     return getErrorMessage(error, "Registration failed!");
+  }
+};
+
+export const favoriteAction = async ({
+  request,
+  params,
+}: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const productId = params.productId;
+
+  if (!productId) {
+    throw new Error("No product ID provided");
+  }
+
+  const data = {
+    productId: productId,
+    favorite: formData.get("favorite") === "true",
+  };
+
+  try {
+    const res = await api.patch("users/products/toggle-favorite", data);
+    if (res.status !== 200) {
+      return { message: res.data || "Setting favorite failed!" };
+    }
+
+    await queryClient.invalidateQueries({
+      queryKey: ["products", "detail", productId],
+    });
+
+    return null;
+  } catch (error) {
+    return getErrorMessage(error, "Setting favorite failed!");
   }
 };

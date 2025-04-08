@@ -10,6 +10,7 @@ import HomePage from "@/pages/HomePage";
 import ProductDetailPage from "@/pages/products/ProductDetailPage";
 import ProductPage from "@/pages/products/ProductPage";
 import {
+  favoriteAction,
   loginFormAction,
   logoutAction,
   registerConfirmPasswordAction,
@@ -90,6 +91,7 @@ export const routerActionLoader = createBrowserRouter([
             path: ":productId",
             element: <ProductDetailPage />,
             loader: productDetailLoader,
+            action: favoriteAction,
           },
         ],
       },
