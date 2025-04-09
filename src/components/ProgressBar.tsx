@@ -2,7 +2,9 @@ import { useIsFetching } from "@tanstack/react-query";
 import { useNavigation } from "react-router";
 
 // const ProgressBar = () => {
+//Route or form actions (e.g., navigating to a new page, form submit)
 //   const navigation = useNavigation();
+//useIsFetching() super useful when you wanna show a global loader, like a spinner at the top of the page when any data is loading.It represents the number of queries that are currently fetching in the background
 //   const fetching = useIsFetching() > 0;
 
 //   if (fetching || navigation.state !== "idle") {
@@ -21,6 +23,7 @@ import { useNavigation } from "react-router";
 
 const ProgressBar = () => {
   const navigation = useNavigation();
+
   const fetching = useIsFetching() > 0;
 
   if (fetching || navigation.state !== "idle") {
