@@ -67,7 +67,7 @@ export type User = {
   imageUrl: string;
 };
 
-export type Cart = {
+export type CartItem = {
   id: number;
   name: string;
   price: string;

@@ -64,7 +64,7 @@ export function AddToCartForm({ isAvailable }: AddToCartFormProps) {
                 <FormControl>
                   <Input
                     {...field}
-                    className="h-8 w-16 rounded-none border-x-0"
+                    className="h-8 w-14 rounded-none focus-visible:outline-none focus-visible:ring-0"
                     type="number"
                     inputMode="numeric"
                     min={0}
