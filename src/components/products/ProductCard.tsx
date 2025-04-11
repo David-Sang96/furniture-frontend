@@ -8,9 +8,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn, formatPrice } from "@/lib/utils";
+import { useCartStore } from "@/store/cartStore";
 import { Product } from "@/types";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router";
+import { toast } from "sonner";
 import { Icons } from "../icons";
 import { AspectRatio } from "../ui/aspect-ratio";
 
@@ -22,6 +24,20 @@ const imgUrl = import.meta.env.VITE_IMG_URL;
 
 function ProductCard({ product, className }: ProductCardProps) {
   const isDesktop = useMediaQuery({ minWidth: 1530 });
+  const carts = useCartStore((store) => store.carts);
+  const addItem = useCartStore((store) => store.addItem);
+  const cartItem = carts.find((item) => item.id === product.id);
+
+  const addToCartHandler = () => {
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images[0].path,
+      quantity: 1,
+    });
+    toast.success("Product is added to cart successfully");
+  };
 
   return (
     <Card className={cn("size-full overflow-hidden rounded-lg", className)}>
@@ -55,9 +71,17 @@ function ProductCard({ product, className }: ProductCardProps) {
             size={isDesktop ? "lg" : "sm"}
             className="w-full rounded-sm bg-own font-bold hover:bg-own/80 dark:text-white"
             aria-label="Active"
+            onClick={addToCartHandler}
+            disabled={!!cartItem}
           >
-            <Icons.plus />
-            Add to cart
+            {cartItem ? (
+              "Added Item"
+            ) : (
+              <>
+                <Icons.plus />
+                Add to cart
+              </>
+            )}
           </Button>
         ) : (
           <Button

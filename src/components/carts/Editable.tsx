@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 import { Icons } from "../icons";
 
 const quantitySchema = z.object({
@@ -52,6 +53,7 @@ export default function Editable({
   // };
 
   const handleDecrease = () => {
+    if (currentQuantity === 1) toast.error("Product is removed from cart");
     // Returns the larger value of quanity or 0
     //If quanity is greater than 0, it will return quanity. If quanity is less than 0, it will return 0.
     const newQuantity = Math.max(currentQuantity - 1, 0);
@@ -98,8 +100,8 @@ export default function Editable({
                     {...field}
                     type="number"
                     inputMode="numeric"
-                    min={0}
-                    className="h-8 w-14 rounded-none focus-visible:outline-none focus-visible:ring-0"
+                    min={1}
+                    className="h-8 w-14 rounded-none text-center [appearance:textfield] focus-visible:outline-none focus-visible:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                   />
                 </FormControl>
                 <FormMessage />

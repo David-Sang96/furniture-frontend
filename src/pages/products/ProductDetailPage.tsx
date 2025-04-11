@@ -44,7 +44,7 @@ const ProductDetailPage = () => {
     <div>
       <BackButton>
         <div>
-          <Icons.arrowLeft /> All Products
+          <Icons.arrowLeft /> Back
         </div>
       </BackButton>
       {/* Top Right Section */}
@@ -86,7 +86,10 @@ const ProductDetailPage = () => {
               isFavorite={!!product.users?.length}
             />
           </div>
-          <AddToCartForm isAvailable={product?.status === "ACTIVE"} />
+          <AddToCartForm
+            isAvailable={product?.status === "ACTIVE"}
+            product={product}
+          />
           <Separator className="my-5" />
           <Accordion
             type="single"

@@ -24,7 +24,7 @@ const BlogDetailPage = () => {
           <BackButton>
             <Link to={"/blogs"}>
               <Icons.arrowLeft />
-              All Posts
+              Back
             </Link>
           </BackButton>
           {post ? (

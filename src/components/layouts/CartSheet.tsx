@@ -36,7 +36,7 @@ export default function CartSheet() {
               variant="destructive"
               className="absolute -right-2 -top-2 size-6 justify-center rounded-full p-2.5"
             >
-              {itemCount}
+              {carts.length}
             </Badge>
           )}
           <Icons.cart
@@ -73,7 +73,11 @@ export default function CartSheet() {
                 </div>
                 <div className="flex justify-between">
                   <span>Total</span>
-                  <span>{formatPrice(totalAmount.toFixed(2))}</span>
+                  <span>
+                    {formatPrice(totalAmount.toFixed(2), {
+                      notation: "standard",
+                    })}
+                  </span>
                 </div>
               </div>
               <SheetFooter>

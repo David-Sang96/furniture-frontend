@@ -1,5 +1,6 @@
 import { formatPrice } from "@/lib/utils";
 import { CartType, useCartStore } from "@/store/cartStore";
+import { toast } from "sonner";
 import { Separator } from "../ui/separator";
 import Editable from "./Editable";
 
@@ -14,7 +15,10 @@ function CartItem({ cart }: CartItemProps) {
   const removeItem = useCartStore((store) => store.removeItem);
 
   const updateHandler = (quantity: number) => updateItem(cart.id, quantity);
-  const removeHandler = () => removeItem(cart.id);
+  const removeHandler = () => {
+    removeItem(cart.id);
+    toast.error("Product is removed from cart");
+  };
 
   return (
     <div className="mt-4 space-y-3">
@@ -30,7 +34,9 @@ function CartItem({ cart }: CartItemProps) {
           <span className="line-clamp-1 text-sm font-medium">{cart.name}</span>
           <span className="text-xs text-muted-foreground">
             {formatPrice(cart.price)} x {cart.quantity} ={" "}
-            {formatPrice((cart.price * cart.quantity).toFixed(2))}
+            {formatPrice((cart.price * cart.quantity).toFixed(2), {
+              notation: "standard",
+            })}
           </span>
           {/* <span className="line-clamp-1 text-xs capitalize text-muted-foreground">
             {`${cart.category} / ${cart.subcategory}`}
