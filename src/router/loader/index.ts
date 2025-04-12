@@ -56,10 +56,26 @@ export const otpLoader = () => {
   return null;
 };
 
+export const verifyOtpLoader = () => {
+  const authStore = useAuthStore.getState();
+  if (authStore.status !== Status.verify) {
+    return redirect("/forget-password");
+  }
+  return null;
+};
+
 export const confirmPaswordLoader = () => {
   const authStore = useAuthStore.getState();
   if (authStore.status !== Status.confirm) {
     return redirect("/register");
+  }
+  return null;
+};
+
+export const newPaswordLoader = () => {
+  const authStore = useAuthStore.getState();
+  if (authStore.status !== Status.reset) {
+    return redirect("/forget-password");
   }
   return null;
 };

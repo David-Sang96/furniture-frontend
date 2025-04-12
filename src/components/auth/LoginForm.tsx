@@ -78,7 +78,10 @@ export default function LoginForm() {
                 <FormItem>
                   <div className="flex items-center">
                     <FormLabel>Password</FormLabel>
-                    <Link to="#" className="ml-auto text-sm hover:underline">
+                    <Link
+                      to="/forget-password"
+                      className="ml-auto text-sm hover:underline"
+                    >
                       Forgot your password?
                     </Link>
                   </div>

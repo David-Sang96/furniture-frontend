@@ -3,28 +3,36 @@ import ProductRootLayout from "@/layouts/ProductRootLayout";
 import RootLayout from "@/layouts/RootLayout";
 import AboutPage from "@/pages/AboutPage";
 import ConfirmPasswordPage from "@/pages/auth/ConfrimPasswordPage";
+import ForgetPasswordPage from "@/pages/auth/ForgetPasswordPage";
+import NewPasswordPage from "@/pages/auth/NewPasswordPage";
 import OtpPage from "@/pages/auth/OtpPage";
 import SignUpPage from "@/pages/auth/SignUpPage";
+import VerifyOtpPage from "@/pages/auth/VerifyOtpPage";
 import ErrorPage from "@/pages/ErrorPage";
 import HomePage from "@/pages/HomePage";
 import ProductDetailPage from "@/pages/products/ProductDetailPage";
 import ProductPage from "@/pages/products/ProductPage";
 import {
+  forgetPasswordAction,
   loginFormAction,
   logoutAction,
+  newPasswordAction,
+  otpAction,
   registerConfirmPasswordAction,
-  registerOTPAction,
   registerPhoneAction,
+  verifyOtpAction,
 } from "@/router/action";
 import {
   authCheckLoader,
   blogInfiniteLoader,
   confirmPaswordLoader,
   homeLoader,
+  newPaswordLoader,
   otpLoader,
   postDetailLoader,
   productDetailLoader,
   productsInfiniteLoader,
+  verifyOtpLoader,
 } from "@/router/loader";
 import { lazy, Suspense } from "react";
 import { createBrowserRouter, redirect } from "react-router";
@@ -124,7 +132,7 @@ export const routerActionLoader = createBrowserRouter([
         path: "otp",
         element: <OtpPage />,
         loader: otpLoader,
-        action: registerOTPAction,
+        action: otpAction,
       },
       {
         path: "confirm-password",
@@ -135,4 +143,27 @@ export const routerActionLoader = createBrowserRouter([
     ],
   },
   { path: "/logout", action: logoutAction, loader: () => redirect("/") },
+  {
+    path: "/forget-password",
+    element: <AuthRootLayout />,
+    children: [
+      {
+        index: true,
+        element: <ForgetPasswordPage />,
+        action: forgetPasswordAction,
+      },
+      {
+        path: "verify",
+        element: <VerifyOtpPage />,
+        loader: verifyOtpLoader,
+        action: verifyOtpAction,
+      },
+      {
+        path: "new-password",
+        element: <NewPasswordPage />,
+        loader: newPaswordLoader,
+        action: newPasswordAction,
+      },
+    ],
+  },
 ]);

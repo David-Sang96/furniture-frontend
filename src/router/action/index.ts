@@ -67,7 +67,7 @@ export const registerPhoneAction = async ({ request }: ActionFunctionArgs) => {
   }
 };
 
-export const registerOTPAction = async ({ request }: ActionFunctionArgs) => {
+export const otpAction = async ({ request }: ActionFunctionArgs) => {
   const authStore = useAuthStore.getState();
   if (!authStore.phone || !authStore.token) {
     return {
@@ -93,6 +93,31 @@ export const registerOTPAction = async ({ request }: ActionFunctionArgs) => {
     // client state management
     authStore.setAuth(res.data.phone, res.data.token, Status.confirm);
     return redirect("/register/confirm-password");
+  } catch (error) {
+    return getErrorMessage(error, "Verifying OTP failed!");
+  }
+};
+export const verifyOtpAction = async ({ request }: ActionFunctionArgs) => {
+  const authStore = useAuthStore.getState();
+  if (!authStore.phone || !authStore.token) {
+    return {
+      error: "Authentication data is missing. Please restart the process.",
+    };
+  }
+  const formData = await request.formData();
+  const otp = formData.get("otp");
+  if (!otp) return { message: "OTP is required" };
+  try {
+    const res = await authApi.post("verify", {
+      phone: authStore.phone,
+      otp,
+      token: authStore.token,
+    });
+    if (res.status !== 200) {
+      return { message: res.data || "Verifying OTP failed!" };
+    }
+    authStore.setAuth(res.data.phone, res.data.token, Status.reset);
+    return redirect("/forget-password/new-password");
   } catch (error) {
     return getErrorMessage(error, "Verifying OTP failed!");
   }
@@ -130,6 +155,53 @@ export const registerConfirmPasswordAction = async ({
     return redirect("/");
   } catch (error) {
     return getErrorMessage(error, "Registration failed!");
+  }
+};
+
+export const newPasswordAction = async ({ request }: ActionFunctionArgs) => {
+  const authStore = useAuthStore.getState();
+  if (!authStore.phone || !authStore.token) {
+    return {
+      error: "Authentication data is missing. Please restart the process.",
+    };
+  }
+
+  const formData = await request.formData();
+  const password = formData.get("password");
+  if (!password) {
+    return { message: "Password is required." };
+  }
+
+  try {
+    const res = await authApi.post("reset-password", {
+      phone: authStore.phone,
+      password,
+      token: authStore.token,
+    });
+    if (res.status !== 200) {
+      return { message: res.data || "Changing password failed!" };
+    }
+    authStore.clearAuth();
+    return redirect("/");
+  } catch (error) {
+    return getErrorMessage(error, "Changing password failed!");
+  }
+};
+
+export const forgetPasswordAction = async ({ request }: ActionFunctionArgs) => {
+  const authStore = useAuthStore.getState();
+  const formData = await request.formData();
+  const credentials = Object.fromEntries(formData);
+
+  try {
+    const response = await authApi.post("forget-password", credentials);
+    if (response.status !== 200) {
+      return { message: response.data || "Sending OTP Failed!" };
+    }
+    authStore.setAuth(response.data.phone, response.data.token, Status.verify);
+    return redirect("/forget-password/verify");
+  } catch (error) {
+    return getErrorMessage(error, "Sending OTP Failed!");
   }
 };
 
