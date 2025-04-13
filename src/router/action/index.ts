@@ -11,6 +11,7 @@ export const getErrorMessage = (error: unknown, defaultMsg: string): string => {
 };
 
 export const loginFormAction = async ({ request }: ActionFunctionArgs) => {
+  const auth = useAuthStore.getState();
   const formData = await request.formData();
   // const authData = {
   //   phone: formData.get("phone"),
@@ -32,7 +33,7 @@ export const loginFormAction = async ({ request }: ActionFunctionArgs) => {
     if (res.status !== 200) {
       return { message: res.data || "Login failed!" };
     }
-
+    auth.setUser(res.data.userInfo);
     const redirectTo = new URL(request.url).searchParams.get("redirect") || "/";
     return redirect(redirectTo);
   } catch (error) {
@@ -202,6 +203,24 @@ export const forgetPasswordAction = async ({ request }: ActionFunctionArgs) => {
     return redirect("/forget-password/verify");
   } catch (error) {
     return getErrorMessage(error, "Sending OTP Failed!");
+  }
+};
+
+export const updatePasswordAction = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const credentails = Object.fromEntries(formData);
+
+  try {
+    const response = await api.post("update-password", credentails);
+    if (response.status !== 200) {
+      console.log(response);
+      return { error: response.data.message || "Update Password Failed!" };
+    }
+
+    await api.post("logout");
+    return redirect("/login");
+  } catch (error) {
+    return getErrorMessage(error, "Update Password Failed!");
   }
 };
 

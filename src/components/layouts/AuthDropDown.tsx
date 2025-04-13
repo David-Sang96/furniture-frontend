@@ -60,7 +60,7 @@ function AuthDropDown({ user }: AuthDropDownProps) {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link to={"#"} className="cursor-pointer">
+            <Link to={"/setting"} className="cursor-pointer">
               <Icons.gear className="r mr-2 size-4" aria-hidden="true" />
               Setting
               <DropdownMenuShortcut>⇧⌘S</DropdownMenuShortcut>

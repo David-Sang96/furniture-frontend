@@ -40,3 +40,28 @@ export const passwordSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"], // Show error on confirmPassword field
   });
+
+export const updatePasswordSchema = z
+  .object({
+    oldPassword: z
+      .string()
+      .regex(
+        /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]+$/,
+        "Password must contain at least one letter and one digit",
+      )
+      .min(8, "Password must be at least 8 characters")
+      .max(15, "Password is too long"),
+    newPassword: z
+      .string()
+      .regex(
+        /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]+$/,
+        "Password must contain at least one letter and one digit",
+      )
+      .min(8, "Password must be at least 8 characters")
+      .max(15, "Password is too long"),
+    confirmNewPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "Passwords do not match",
+    path: ["confirmNewPassword"], // Show error on confirmPassword field
+  });

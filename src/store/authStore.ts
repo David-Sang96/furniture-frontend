@@ -10,20 +10,30 @@ export enum Status {
   none = "none",
 }
 
+type UserInfo = {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+} | null;
+
 type State = {
   phone: string | null;
   token: string | null;
   status: Status;
+  user: UserInfo;
 };
 
 const initialState: State = {
   phone: null,
   token: null,
   status: Status.none,
+  user: null,
 };
 
 type Actions = {
   setAuth: (phone: string, token: string, status: Status) => void;
+  setUser: (user: UserInfo) => void;
   clearAuth: () => void;
 };
 
@@ -36,6 +46,10 @@ const useAuthStore = create<State & Actions>()(
           state.phone = phone;
           state.token = token;
           state.status = status;
+        }),
+      setUser: (user) =>
+        set((state) => {
+          state.user = user;
         }),
       clearAuth: () => set(initialState),
     })),

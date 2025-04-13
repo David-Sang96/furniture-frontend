@@ -12,6 +12,7 @@ import ErrorPage from "@/pages/ErrorPage";
 import HomePage from "@/pages/HomePage";
 import ProductDetailPage from "@/pages/products/ProductDetailPage";
 import ProductPage from "@/pages/products/ProductPage";
+import SettingPage from "@/pages/SettingPage";
 import {
   forgetPasswordAction,
   loginFormAction,
@@ -20,6 +21,7 @@ import {
   otpAction,
   registerConfirmPasswordAction,
   registerPhoneAction,
+  updatePasswordAction,
   verifyOtpAction,
 } from "@/router/action";
 import {
@@ -53,6 +55,11 @@ export const routerActionLoader = createBrowserRouter([
     children: [
       { index: true, element: <HomePage />, loader: homeLoader },
       { path: "about", element: <AboutPage /> },
+      {
+        path: "setting",
+        element: <SettingPage />,
+        action: updatePasswordAction,
+      },
       {
         path: "blogs",
         element: (
